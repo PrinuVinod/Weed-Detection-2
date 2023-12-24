@@ -8,20 +8,21 @@ weightsPath = 'crop_weed_detection.weights'
 configPath = 'crop_weed.cfg'
 #color selection for drawing bbox
 COLORS = np.random.randint(0, 255, size=(len(LABELS), 3),dtype="uint8")
-print("[INFO] loading YOLO from disk...")
+print("Loading video from disk...")
 net = cv2.dnn.readNetFromDarknet(configPath, weightsPath)
 
 #parameters
 confi = 0.5
 thresh = 0.5
+# ln = net.getLayerNames()
+# ln = [ln[i[0] - 1] for i in net.getUnconnectedOutLayers()]
 ln = net.getLayerNames()
-ln = [ln[i[0] - 1] for i in net.getUnconnectedOutLayers()]
-
+ln = [ln[i - 1] for i in net.getUnconnectedOutLayers()]
 
 # if you want to use webcam insted of video uncomment below line and comment line 24 
 # cap = cv2.VideoCapture(0)
 
-cap = cv2.VideoCapture("crop_weed_video.mp4")
+cap = cv2.VideoCapture("videos/2.mp4")
 
 while True:
 	ret,image = cap.read()
